@@ -2,16 +2,14 @@ version: "3.8"
 
 services:
   zk-prover:
-    build:
-      context: ./zk-prover
+    image: layeredge/zk-prover:latest
     ports:
       - "3001:3001"
     networks:
       - lightnode
 
   cli-light-node:
-    build:
-      context: ./cli-light-node
+    image: layeredge/cli-light-node:latest
     depends_on:
       - zk-prover
     environment:
