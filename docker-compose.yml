@@ -1,13 +1,17 @@
 version: "3.8"
+
 services:
   zk-prover:
-    image: layeredge/zk-prover:latest
+    build:
+      context: ./zk-prover
     ports:
       - "3001:3001"
     networks:
       - lightnode
+
   cli-light-node:
-    image: layeredge/cli-light-node:latest
+    build:
+      context: ./cli-light-node
     depends_on:
       - zk-prover
     environment:
@@ -19,6 +23,7 @@ services:
       - PRIVATE_KEY=${PRIVATE_KEY}
     networks:
       - lightnode
+
 networks:
   lightnode:
     driver: bridge
