@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  zk-prover:
+    image: layeredge/zk-prover:latest
+    ports:
+      - "3001:3001"
+    networks:
+      - lightnode
+  cli-light-node:
+    image: layeredge/cli-light-node:latest
+    depends_on:
+      - zk-prover
+    environment:
+      - GRPC_URL=${GRPC_URL}
+      - CONTRACT_ADDR=${CONTRACT_ADDR}
+      - ZK_PROVER_URL=${ZK_PROVER_URL}
+      - API_REQUEST_TIMEOUT=${API_REQUEST_TIMEOUT}
+      - POINTS_API=${POINTS_API}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+    networks:
+      - lightnode
+networks:
+  lightnode:
+    driver: bridge
